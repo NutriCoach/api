@@ -1,4 +1,4 @@
-# NutriCoach API
+# NutriCoach REST API
 ---
 ## Setup
 - Node v8.x or above
