@@ -25,11 +25,11 @@ recipeSchema.findById = function (cb) {
 const Recipes = mongoose.model('Recipes', recipeSchema);
 
 
-exports.findByEmail = (email) => {
-    return Recipes.find({ email: email });
+exports.findByUserId = (userId) => {
+    return Recipes.find({ userId: userId });
 };
-exports.findById = (id) => {
-    return Recipes.findById(id)
+exports.findById = async (id) => {
+    return await Recipes.findById(id)
         .then((result) => {
             result = result.toJSON();
             delete result._id;

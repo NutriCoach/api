@@ -33,7 +33,6 @@ exports.validJWTNeeded = (req, res, next) => {
                 req.jwt = jwt.verify(authorization[1], secret);
                 return next();
             }
-
         } catch (err) {
             return res.status(403).send();
         }
