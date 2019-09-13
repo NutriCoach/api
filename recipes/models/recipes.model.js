@@ -2,31 +2,34 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/nutricoach-api');
 const Schema = mongoose.Schema;
 
-const productSchema  = new Schema({
-   name : String
+const recipeSchema = new Schema({
+    title: String,
+    imageUrl: String,
+    sourceUrl: String,
+    userId: String,
 });
 
-productSchema.virtual('id').get(function () {
+recipeSchema.virtual('id').get(function () {
     return this._id.toHexString();
 });
 
 // Ensure virtual fields are serialised.
-productSchema.set('toJSON', {
+recipeSchema.set('toJSON', {
     virtuals: true
 });
 
-productSchema.findById = function (cb) {
-    return this.model('Products').find({id: this.id}, cb);
+recipeSchema.findById = function (cb) {
+    return this.model('Recipes').find({ id: this.id }, cb);
 };
 
-const Product = mongoose.model('Products', productSchema);
+const Recipes = mongoose.model('Recipes', recipeSchema);
 
 
 exports.findByEmail = (email) => {
-    return Product.find({email: email});
+    return Recipes.find({ email: email });
 };
 exports.findById = (id) => {
-    return Product.findById(id)
+    return Recipes.findById(id)
         .then((result) => {
             result = result.toJSON();
             delete result._id;
@@ -35,45 +38,45 @@ exports.findById = (id) => {
         });
 };
 
-exports.createProduct = (productData) => {
-    const product = new Product(productData);
-    return product.save();
+exports.createRecipe = (recipeData) => {
+    const recipe = new Recipes(recipeData);
+    return recipe.save();
 };
 
 exports.list = (perPage, page) => {
     return new Promise((resolve, reject) => {
-        Product.find()
+        Recipes.find()
             .limit(perPage)
             .skip(perPage * page)
-            .exec(function (err, products) {
+            .exec(function (err, recipes) {
                 if (err) {
                     reject(err);
                 } else {
-                    resolve(products);
+                    resolve(recipes);
                 }
             })
     });
 };
 
-exports.patchProduct = (id, productData) => {
+exports.patchRecipe = (id, recipeData) => {
     return new Promise((resolve, reject) => {
-        Product.findById(id, function (err, product) {
+        Recipes.findById(id, function (err, recipe) {
             if (err) reject(err);
-            for (let i in productData) {
-                product[i] = productData[i];
+            for (let i in recipeData) {
+                recipe[i] = recipeData[i];
             }
-            product.save(function (err, updatedProduct) {
+            recipe.save(function (err, updatedRecipe) {
                 if (err) return reject(err);
-                resolve(updatedProduct);
+                resolve(updatedRecipe);
             });
         });
     })
 
 };
 
-exports.removeById = (productId) => {
+exports.removeById = (recipeId) => {
     return new Promise((resolve, reject) => {
-        Product.remove({_id: productId}, (err) => {
+        Recipes.remove({ _id: recipeId }, (err) => {
             if (err) {
                 reject(err);
             } else {

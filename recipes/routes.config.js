@@ -1,4 +1,4 @@
-const ProductController = require('./controllers/recipes.controller');
+const RecipeController = require('./controllers/recipes.controller');
 const PermissionMiddleware = require('../common/middleware/auth.permission.middleware');
 const ValidationMiddleware = require('../common/middleware/auth.validation.middleware');
 const config = require('../common/config/env.config');
@@ -11,28 +11,28 @@ exports.routesConfig = function (app) {
     app.post('/recipes', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-        ProductController.insert
+        RecipeController.insert
     ]);
     app.get('/recipes', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-        ProductController.list
+        RecipeController.list
     ]);
-    app.get('/products/:productId', [
+    app.get('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
-        ProductController.getById
+        RecipeController.getById
     ]);
-    app.patch('/products/:productId', [
+    app.patch('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
-        ProductController.patchById
+        RecipeController.patchById
     ]);
-    app.delete('/products/:productId', [
+    app.delete('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
-        ProductController.removeById
+        RecipeController.removeById
     ]);
 };
