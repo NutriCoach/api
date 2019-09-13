@@ -34,6 +34,7 @@ exports.validJWTNeeded = (req, res, next) => {
                 return next();
             }
         } catch (err) {
+            console.log(err.toString());
             return res.status(403).send();
         }
     } else {
