@@ -31,6 +31,7 @@ exports.routesConfig = function (app) {
     app.delete('/users/:userId', [
         ValidationMiddleware.validJWTNeeded,
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         UsersController.removeById
     ]);
 };
