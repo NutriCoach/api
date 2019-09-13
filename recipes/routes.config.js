@@ -1,4 +1,4 @@
-const ProductController = require('./controllers/product.controller');
+const ProductController = require('./controllers/recipes.controller');
 const PermissionMiddleware = require('../common/middleware/auth.permission.middleware');
 const ValidationMiddleware = require('../common/middleware/auth.validation.middleware');
 const config = require('../common/config/env.config');
