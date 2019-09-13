@@ -8,14 +8,14 @@ const PAID = config.permissionLevels.PAID_USER;
 const FREE = config.permissionLevels.NORMAL_USER;
 
 exports.routesConfig = function (app) {
-    app.post('/products', [
+    app.post('/recipes', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         ProductController.insert
     ]);
-    app.get('/products', [
+    app.get('/recipes', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
+        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         ProductController.list
     ]);
     app.get('/products/:productId', [
@@ -32,7 +32,7 @@ exports.routesConfig = function (app) {
     ]);
     app.delete('/products/:productId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
+        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         ProductController.removeById
     ]);
 };
