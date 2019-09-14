@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/nutricoach-api');
+mongoose.connect(process.env.MONGODB_DATABASE_URL);
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({

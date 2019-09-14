@@ -1,5 +1,5 @@
+require('dotenv').config();
 const config = require('./common/config/env.config.js');
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
@@ -25,6 +25,7 @@ app.use(bodyParser.json());
 AuthorizationRouter.routesConfig(app);
 UsersRouter.routesConfig(app);
 RecipesRouter.routesConfig(app);
+console.log(process.env.MONGODB_DATABASE_URL);
 
 
 app.listen(config.port, function () {
