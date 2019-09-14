@@ -20,14 +20,14 @@ userSchema.set('toJSON', {
 });
 
 userSchema.findById = function (cb) {
-    return this.model('Users').find({id: this.id}, cb);
+    return this.model('Users').find({ id: this.id }, cb);
 };
 
 const User = mongoose.model('Users', userSchema);
 
 
 exports.findByEmail = (email) => {
-    return User.find({email: email});
+    return User.find({ email: email });
 };
 exports.findById = (id) => {
     return User.findById(id)
@@ -77,7 +77,7 @@ exports.patchUser = (id, userData) => {
 
 exports.removeById = (userId) => {
     return new Promise((resolve, reject) => {
-        User.remove({_id: userId}, (err) => {
+        User.remove({ _id: userId }, (err) => {
             if (err) {
                 reject(err);
             } else {

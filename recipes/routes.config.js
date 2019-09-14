@@ -35,4 +35,10 @@ exports.routesConfig = function (app) {
         PermissionMiddleware.minimumPermissionLevelRequired(FREE),
         RecipeController.removeById
     ]);
+
+    app.get('/recipes/user/:userId', [
+        ValidationMiddleware.validJWTNeeded,
+        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        RecipeController.getByUserId
+    ]);
 };

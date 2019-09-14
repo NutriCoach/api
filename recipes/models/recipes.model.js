@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/nutricoach-api');
+mongoose.connect('mongodb://localhost/nutricoach-api', { useNewUrlParser: true });
 const Schema = mongoose.Schema;
 
 const recipeSchema = new Schema({
@@ -25,11 +25,18 @@ recipeSchema.findById = function (cb) {
 const Recipes = mongoose.model('Recipes', recipeSchema);
 
 
-exports.findByUserId = (userId) => {
-    return Recipes.find({ userId: userId });
+exports.findByUserId = (id) => {
+    return Recipes.find({
+        $or: [
+            { userId: id }
+        ],
+    })
+        .then((result) => {
+            return result;
+        });
 };
-exports.findById = async (id) => {
-    return await Recipes.findById(id)
+exports.findById = (id) => {
+    return Recipes.findById(id)
         .then((result) => {
             result = result.toJSON();
             delete result._id;

@@ -50,3 +50,9 @@ exports.removeById = (req, res) => {
             res.status(204).send({});
         });
 };
+
+exports.getByUserId = (req, res) => {
+    RecipeModel.findByUserId(req.params.userId).then((result) => {
+        res.status(200).send(result);
+    });
+};
