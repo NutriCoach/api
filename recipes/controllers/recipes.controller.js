@@ -1,13 +1,9 @@
-const ProductModel = require('../models/product.model');
+const RecipeModel = require('../models/recipes.model');
 const crypto = require('crypto');
 
 
 exports.insert = (req, res) =>{
-    let salt = crypto.randomBytes(16).toString('base64');
-    let hash = crypto.createHmac('sha512', salt).update(req.body.password).digest("base64");
-    req.body.password = salt + "$" + hash;
-    req.body.permissionLevel = 1;
-    ProductModel.createProduct(req.body)
+    RecipeModel.createRecipe(req.body)
         .then((result) => {
             res.status(201).send({id: result._id});
         });
@@ -22,14 +18,14 @@ exports.list = (req, res) => {
             page = Number.isInteger(req.query.page) ? req.query.page : 0;
         }
     }
-    ProductModel.list(limit, page)
+    RecipeModel.list(limit, page)
         .then((result) => {
             res.status(200).send(result);
         })
 };
 
 exports.getById = (req, res) => {
-    ProductModel.findById(req.params.productId)
+    RecipeModel.findById(req.params.recipeId)
         .then((result) => {
             res.status(200).send(result);
         });
@@ -41,7 +37,7 @@ exports.patchById = (req, res) => {
         req.body.password = salt + "$" + hash;
     }
 
-    ProductModel.patchProduct(req.params.productId, req.body)
+    RecipeModel.patchRecipe(req.params.recipeId, req.body)
         .then((result) => {
             res.status(204).send({});
         });
@@ -49,8 +45,14 @@ exports.patchById = (req, res) => {
 };
 
 exports.removeById = (req, res) => {
-    ProductModel.removeById(req.params.productId)
+    RecipeModel.removeById(req.params.recipeId)
         .then((result)=>{
             res.status(204).send({});
         });
+};
+
+exports.getByUserId = (req, res) => {
+    RecipeModel.findByUserId(req.params.userId).then((result) => {
+        res.status(200).send(result);
+    });
 };
