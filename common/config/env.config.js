@@ -1,5 +1,5 @@
 module.exports = {
-    "port": 80,
+    "port": 3000,
     "appEndpoint": "http://localhost:3600",
     "apiEndpoint": "http://localhost:3600",
     "jwt_secret": "secretToken",
