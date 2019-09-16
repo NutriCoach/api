@@ -10,35 +10,35 @@ const FREE = config.permissionLevels.NORMAL_USER;
 exports.routesConfig = function (app) {
     app.post('/recipes', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         RecipeController.insert
     ]);
     app.get('/recipes', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(ADMIN),
         RecipeController.list
     ]);
     app.get('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         RecipeController.getById
     ]);
     app.patch('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         PermissionMiddleware.onlySameUserOrAdminCanDoThisAction,
         RecipeController.patchById
     ]);
     app.delete('/recipes/:recipeId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         RecipeController.removeById
     ]);
 
     app.get('/recipes/user/:userId', [
         ValidationMiddleware.validJWTNeeded,
-        PermissionMiddleware.minimumPermissionLevelRequired(FREE),
+        PermissionMiddleware.minimumPermissionLevelRequired(PAID),
         RecipeController.getByUserId
     ]);
 };

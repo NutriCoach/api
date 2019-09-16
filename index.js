@@ -28,6 +28,6 @@ RecipesRouter.routesConfig(app);
 console.log(process.env.MONGODB_DATABASE_URL);
 
 
-app.listen(config.port, function () {
-    console.log('app listening at port %s', config.port);
+app.listen(process.env.PORT || 3000, function () {
+    console.log('app listening at port %s', process.env.PORT);
 });
